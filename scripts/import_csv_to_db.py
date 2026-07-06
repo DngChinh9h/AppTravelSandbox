@@ -198,6 +198,7 @@ def main():
     parser = argparse.ArgumentParser(description="Import CSV vào PostgreSQL database")
     parser.add_argument("--csv", default=DEFAULT_CSV, help="Đường dẫn file CSV")
     parser.add_argument("--tables", default=None, help="Chỉ import các bảng (phân cách bởi dấu phẩy)")
+    parser.add_argument("--url", default=None, help="Chuỗi kết nối database PostgreSQL (ví dụ: postgresql://user:pass@host/dbname)")
     parser.add_argument("--dry-run", action="store_true", help="Chỉ phân tích, không import")
     parser.add_argument("--mode", choices=["truncate", "upsert"], default="truncate",
                         help="truncate = xóa sạch rồi insert lại; upsert = insert/update từng record")
@@ -231,14 +232,21 @@ def main():
         return
 
     # ── Bước 2: Kết nối DB ──────────────────────────────────────────────────
-    print(f"🔌 Kết nối PostgreSQL ({DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['dbname']})...")
+    db_url = args.url
+    if db_url:
+        print("🔌 Kết nối PostgreSQL qua URL cung cấp...")
+    else:
+        print(f"🔌 Kết nối PostgreSQL ({DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['dbname']})...")
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        if db_url:
+            conn = psycopg2.connect(db_url)
+        else:
+            conn = psycopg2.connect(**DB_CONFIG)
         conn.autocommit = False
         print("   ✅ Kết nối thành công!\n")
     except psycopg2.Error as e:
         print(f"   ❌ Không thể kết nối: {e}")
-        print("   💡 Đảm bảo Docker đang chạy: docker compose up -d db")
+        print("   💡 Đảm bảo Docker đang chạy hoặc kiểm tra lại URL kết nối.")
         sys.exit(1)
 
     # ── Bước 3: Import ──────────────────────────────────────────────────────
