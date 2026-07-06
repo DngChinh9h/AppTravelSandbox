@@ -1,0 +1,80 @@
+app:
+  name: "DuLichViet API"
+  version: "2.0.0"
+  environment: "development"
+  debug: true
+  frontend_url: "http://localhost:5173"
+
+cors:
+  origins:
+    - "http://localhost:5173"
+    - "http://127.0.0.1:5173"
+    - "http://localhost:3000"
+
+auth:
+  access_token_expire_minutes: 15
+  refresh_token_expire_days: 30
+  min_password_length: 6
+  password_reset_token_expire_hours: 1
+
+email:
+  smtp_host: ""
+  smtp_port: 587
+  smtp_username: ""
+  # smtp_password must be set via .env or environment variable
+  from_address: "noreply@dulichviet.local"
+  from_name: "DuLichViet"
+
+ai:
+  model: "gemini-2.5-flash"
+  temperature: 0.7
+  max_retries: 2
+  timeout_seconds: 30
+  min_activities_per_day: 5
+  max_activities_per_day: 5
+  calls_per_day: 3
+  chat_calls_per_day: 20
+  rate_limit_fail_mode: "open"
+  companion_requires_confirmation: true
+  enable_analytics: false
+
+security:
+  claim_token_expire_hours: 24
+  share_token_expire_days: 30
+  max_active_trips_per_user: 5
+
+cache:
+  destination_ttl_seconds: 86400
+  place_search_ttl_seconds: 3600
+
+etl:
+  cities:
+    - "Hà Nội"
+    - "TP. Hồ Chí Minh"
+    - "Đà Nẵng"
+    - "Hội An"
+    - "Nha Trang"
+    - "Phú Quốc"
+    - "Sapa"
+    - "Hạ Long"
+    - "Huế"
+    - "Đà Lạt"
+    - "Vũng Tàu"
+    - "Cần Thơ"
+    - "Quy Nhơn"
+    - "Hải Phòng"
+    - "Ninh Bình"
+    - "Hà Giang"
+    - "Mộc Châu"
+    - "Đồng Hới"
+    - "Phong Nha"
+    - "Phan Thiết"
+    - "Mũi Né"
+    - "Tuy Hòa"
+    - "Buôn Ma Thuột"
+    - "Pleiku"
+    - "Côn Đảo"
+    - "Tây Ninh"
+    - "Châu Đốc"
+  update_interval_days: 30
+  max_places_per_city: 75

@@ -1,0 +1,85 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables (all .env files at any depth)
+.env
+.env.local
+.env.*.local
+
+# Python virtual environment
+venv/
+.venv/
+.uv-cache/
+.uv-python/
+.docker-cli/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test output files (keep test source .py files)
+test_results.json
+test_results.txt
+test_output.txt
+test_full_results.json
+*-smoke.*.log
+*-smoke.result.txt
+.pytest_cache/
+pytest-cache-files-*/
+test-results/
+test_trip.json
+
+# Frontend build artifacts (local only)
+Frontend/dist/
+Frontend/dist_ci/
+Frontend/test-results/
+Frontend/.build-tmp/
+Frontend/.build-tmpverify*/
+Frontend/playwright-report/
+
+# Claude local-only settings
+.claude/settings.local.json
+.claude/AGENTS.md
+
+# MVP1 legacy code (kept for reference, not tracked)
+Backend/app/
+Backend/main.py
+Backend/requirements.txt
+Backend/seed_data.py
+Backend/venv/
+
+# Render/Vercel deploy configs
+# render.yaml tracked ở MVP2 (Render Blueprint — KHÔNG chứa secret; mọi secret là sync:false trong Render UI)
+vercel.json
+!Frontend/vercel.json
+
+# Archive files
+*.zip
+
+# Local-only folders (not pushed to GitHub)
+.codex-run-logs/
+References/
+Diagram/
+guidelines/
+md/
+
+# Runtime logs (for debugging, not committed)
+logs/
+*.log
+
+# Docker tar archives
+*.tar
