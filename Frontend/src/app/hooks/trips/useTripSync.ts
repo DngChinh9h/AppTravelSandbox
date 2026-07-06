@@ -168,24 +168,33 @@ export const useTripSync = (
       // NẾU LÀ LỊCH TRÌNH MỚI TINH (Từ bước manual setup sang) — read from wizard context
       if (wizardDestinations.length > 0 && Object.keys(wizardAllocations).length > 0) {
         try {
-          let dayCounter = 1;
-          let dayId = 1;
-          const generatedDays: Day[] = [];
-
+          // Generate raw candidates to sort chronologically first
+          const candidates: { dateObj: Date; dateStr: string; destinationName: string }[] = [];
           wizardDestinations.forEach((dest) => {
             const allocation = wizardAllocations[dest.id];
             if (!allocation) return;
             const from = parseISO(allocation.from);
             for (let i = 0; i < allocation.days; i++) {
-              generatedDays.push({
-                id: dayId++,
-                label: `Ngày ${dayCounter++} - ${dest.name}`,
-                date: format(addDays(from, i), "dd/MM/yyyy", { locale: vi }),
-                activities: [],
+              const dateObj = addDays(from, i);
+              candidates.push({
+                dateObj,
+                dateStr: format(dateObj, "dd/MM/yyyy", { locale: vi }),
                 destinationName: dest.name,
               });
             }
           });
+
+          // Sort candidates chronologically by dateObj
+          candidates.sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime());
+
+          let dayId = 1;
+          const generatedDays: Day[] = candidates.map((cand, idx) => ({
+            id: dayId++,
+            label: `Ngày ${idx + 1} - ${cand.destinationName}`,
+            date: cand.dateStr,
+            activities: [],
+            destinationName: cand.destinationName,
+          }));
 
           if (generatedDays.length > 0) {
             setDays(generatedDays);
