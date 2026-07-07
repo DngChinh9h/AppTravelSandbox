@@ -298,6 +298,7 @@ export const useTripSync = (
               extraExpenses: a.extraExpenses,
               latitude: a.latitude,
               longitude: a.longitude,
+              placeId: a.placeId,
             })),
           })),
           accommodations: uniqueAccommodations.map((acc) => ({
@@ -359,6 +360,7 @@ export const useTripSync = (
               extraExpenses: a.extraExpenses,
               latitude: a.latitude,
               longitude: a.longitude,
+              placeId: a.placeId,
             })),
           })),
           accommodations: uniqueAccommodations.map((acc) => ({

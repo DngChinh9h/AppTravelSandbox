@@ -121,6 +121,7 @@ export default function DailyItinerary() {
               transportation: a.transportation,
               latitude: a.latitude ?? undefined,
               longitude: a.longitude ?? undefined,
+              placeId: a.placeId ?? undefined,
               city: a.city ?? undefined,
             })),
             destinationName: d.destinationName,
